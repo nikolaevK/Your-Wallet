@@ -46,7 +46,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <BudgetModal />
+            <BudgetModal userId={userId} />
             {children}
           </ThemeProvider>
         </body>

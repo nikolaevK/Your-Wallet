@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { createNewBudget } from "@/actions/createNewBudget";
+
 // import axios from "axios";
 // import toast from "react-hot-toast";
 
@@ -28,7 +30,7 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-export default function BudgetModal() {
+export default function BudgetModal({ userId }: { userId: string }) {
   const { isOpen, onClose } = useBudgetModal();
   const router = useRouter();
 
@@ -42,13 +44,18 @@ export default function BudgetModal() {
     },
   });
 
-  async function onSubmit(values: FormSchema) {
-    console.log("submit");
+  async function onSubmit({ budgetName }: FormSchema) {
+    const params = {
+      name: budgetName,
+      userId,
+    };
+    const result = await createNewBudget(params);
+    console.log(result);
   }
   return (
     <Modal
       title="Create Budget"
-      description="Add a new budget to manage expenses and categories"
+      description="Add new budget to manage expenses and categories"
       isOpen={isOpen}
       onClose={onClose}
     >

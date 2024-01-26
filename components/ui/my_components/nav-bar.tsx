@@ -3,12 +3,13 @@
 import { UserButton } from "@clerk/nextjs";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { BarChart3, Blocks, LayoutDashboard } from "lucide-react";
 
 export default function NavBar() {
   const pathname = usePathname();
+  const { budgetId } = useParams();
 
   return (
     <>
@@ -16,22 +17,22 @@ export default function NavBar() {
         <div className="flex h-16 items-center px-4 font-semibold text-sm">
           <div className="flex justify-center items-center gap-2">
             <Link
-              href="/"
+              href={`/${budgetId}`}
               className={cn(
                 "transition-colors dark:hover:text-white hover:text-black px-4 py-1 rounded-full",
-                pathname === "/"
-                  ? "text-black dark:text-white bg-gray-100"
+                pathname === `/${budgetId}`
+                  ? "text-black dark:text-white bg-gray-100 dark:bg-secondary"
                   : "text-muted-foreground"
               )}
             >
               <p>Dashboard</p>
             </Link>
             <Link
-              href="/new-entry"
+              href={`/${budgetId}/new-entry`}
               className={cn(
                 "transition-colors dark:hover:text-white hover:text-black px-4 py-1 rounded-full",
-                pathname === "/new-entry"
-                  ? "text-black dark:text-white bg-gray-100"
+                pathname === `/${budgetId}/new-entry`
+                  ? "text-black dark:text-white bg-gray-100 dark:bg-secondary"
                   : "text-muted-foreground"
               )}
             >
