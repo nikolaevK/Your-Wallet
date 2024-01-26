@@ -1,9 +1,14 @@
-import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
+import { auth, ClerkProvider } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+import { Inter as FontSans } from "next/font/google";
+
+import type { Metadata } from "next";
 
 import { cn } from "@/lib/utils";
+
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import BudgetModal from "@/components/ui/my_components/budget-modal";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -20,23 +25,32 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { userId } = auth();
+
+  if (!userId) {
+    redirect("/sign-in");
+  }
+
   return (
-    <html lang="en">
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable
+          )}
         >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <BudgetModal />
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
