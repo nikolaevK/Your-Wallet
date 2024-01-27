@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
-import React from "react";
 import { redirect } from "next/navigation";
 import NavBar from "@/components/ui/my_components/nav-bar";
+import prismadb from "@/lib/prismadb";
 
 interface LayoutInterface {
   children: React.ReactNode;
@@ -19,12 +19,16 @@ export default async function layout({
     redirect("/sign-in");
   }
 
-  // If Store doesn't exist send back to initial page
-  // or someones puts random id
+  const budget = await prismadb.budget.findFirst({
+    where: {
+      userId,
+    },
+  });
 
-  // if (!budgetId) {
-  //   redirect("/");
-  // }
+  // this should trigger the BudgetModal
+  if (!budget) {
+    redirect("/");
+  }
 
   return (
     <>

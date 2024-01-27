@@ -14,7 +14,7 @@ datasource db {
 model Budget {
   id  String @id @default(uuid())
   userId String 
-  budgetName String 
+  budgetName String  @unique
   createdAt DateTime @default(now())
   updatedAt   DateTime  @updatedAt
 }

@@ -1,14 +1,17 @@
 "use client";
 
 import { useBudgetModal } from "@/hooks/use-budget-modal";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export default function RootPage() {
   const { onOpen, isOpen } = useBudgetModal();
+  const pathname = usePathname();
 
-  // Does not allow to close the modal if store does not exist
+  // Does not allow to close the modal if budget does not exist
   useEffect(() => {
-    // initially open Modal to choose or create new store
+    console.log(pathname);
+    // initially open BudgetModal to choose or create new store
     if (!isOpen) onOpen();
   }, [isOpen, onOpen]);
 

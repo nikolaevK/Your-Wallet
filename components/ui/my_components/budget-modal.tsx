@@ -3,8 +3,14 @@
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createNewBudget } from "@/actions/createNewBudget";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useBudgetModal } from "@/hooks/use-budget-modal";
 import Modal from "@/components/ui/my_components/modal";
 import {
@@ -15,14 +21,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { createNewBudget } from "@/actions/createNewBudget";
-
-// import axios from "axios";
-// import toast from "react-hot-toast";
 
 const formSchema = z.object({
   budgetName: z.string().min(3),
@@ -31,10 +29,9 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>;
 
 export default function BudgetModal({ userId }: { userId: string }) {
+  const [loading, setLoading] = useState(false);
   const { isOpen, onClose } = useBudgetModal();
   const router = useRouter();
-
-  const [loading, setLoading] = useState(false);
 
   // extracting the type from formSchema
   const form = useForm<FormSchema>({
@@ -45,12 +42,16 @@ export default function BudgetModal({ userId }: { userId: string }) {
   });
 
   async function onSubmit({ budgetName }: FormSchema) {
-    const params = {
-      name: budgetName,
-      userId,
-    };
-    const result = await createNewBudget(params);
-    console.log(result);
+    try {
+      setLoading(true);
+      // This function runs on the server
+      await createNewBudget(budgetName, userId);
+      router.push(`/${userId}`);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      window.alert(error);
+    }
   }
   return (
     <Modal

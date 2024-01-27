@@ -6,10 +6,18 @@ import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { BarChart3, Blocks, LayoutDashboard } from "lucide-react";
+import { useBudgetModal } from "@/hooks/use-budget-modal";
+import { useEffect } from "react";
 
 export default function NavBar() {
+  const { onClose } = useBudgetModal();
   const pathname = usePathname();
   const { budgetId } = useParams();
+
+  // Effect is responsible for closing an initial modal when first budget is created.
+  useEffect(() => {
+    onClose();
+  }, []);
 
   return (
     <>
@@ -47,21 +55,21 @@ export default function NavBar() {
       </section>
       <section className="fixed block md:hidden bottom-0 w-full h-12 border-t z-10">
         <ul className="flex justify-between h-full items-center mx-6">
-          <Link href="/">
+          <Link href={`/${budgetId}`}>
             <LayoutDashboard
               className={cn(
                 "h-8 w-8",
-                pathname === "/"
+                pathname === `/${budgetId}`
                   ? "text-black dark:text-white"
                   : "text-muted-foreground"
               )}
             />
           </Link>
-          <Link href="/new-entry">
+          <Link href={`/${budgetId}/new-entry`}>
             <Blocks
               className={cn(
                 "h-8 w-8",
-                pathname === "/new-entry"
+                pathname === `/${budgetId}/new-entry`
                   ? "text-black dark:text-white"
                   : "text-muted-foreground"
               )}

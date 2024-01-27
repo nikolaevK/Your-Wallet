@@ -23,6 +23,7 @@ export default function Modal({
   title,
   children,
 }: ModalProps) {
+  // Closes on click
   function onChange(open: boolean) {
     if (!open) {
       onClose();
