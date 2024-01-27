@@ -19,20 +19,20 @@ export default async function layout({
     redirect("/sign-in");
   }
 
-  const budget = await prismadb.budget.findFirst({
+  const budgets = await prismadb.budget.findMany({
     where: {
       userId,
     },
   });
 
   // this should trigger the BudgetModal
-  if (!budget) {
+  if (!budgets) {
     redirect("/");
   }
 
   return (
     <>
-      <NavBar />
+      <NavBar budgets={budgets} />
       {children}
     </>
   );

@@ -2,6 +2,7 @@
 
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
+import { revalidatePath } from "next/cache";
 
 export async function createNewBudget(budgetName: string, userId: string) {
   const { userId: signedInUser } = auth();
@@ -18,6 +19,8 @@ export async function createNewBudget(budgetName: string, userId: string) {
       },
     });
 
+    // Updates the path with new data
+    revalidatePath(`/${budget.id}`);
     return budget;
   } catch (error) {
     console.log(error);

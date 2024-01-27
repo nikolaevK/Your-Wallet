@@ -19,14 +19,6 @@ export default async function InitialLayout({
     },
   });
 
-  const budgets = await prismadb.budget.findMany({
-    where: {
-      userId,
-    },
-  });
-
-  console.log(budgets);
-
   if (budget) {
     // redirects to other page for that particular store
     redirect(`/${budget.id}`);

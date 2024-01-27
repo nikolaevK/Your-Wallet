@@ -45,8 +45,11 @@ export default function BudgetModal({ userId }: { userId: string }) {
     try {
       setLoading(true);
       // This function runs on the server
-      await createNewBudget(budgetName, userId);
-      router.push(`/${userId}`);
+      const budget = await createNewBudget(budgetName, userId);
+      router.push(`/${budget?.id}`);
+      setLoading(false);
+      form.reset();
+      onClose();
     } catch (error) {
       console.log(error);
       setLoading(false);

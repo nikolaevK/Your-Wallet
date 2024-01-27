@@ -1,29 +1,33 @@
 "use client";
 
+import { Budget } from "@prisma/client";
 import { UserButton } from "@clerk/nextjs";
-import { ModeToggle } from "@/components/ui/mode-toggle";
+
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
+
 import { cn } from "@/lib/utils";
 import { BarChart3, Blocks, LayoutDashboard } from "lucide-react";
-import { useBudgetModal } from "@/hooks/use-budget-modal";
-import { useEffect } from "react";
+import { ModeToggle } from "@/components/ui/mode-toggle";
+import BudgetOptionsModal from "@/components/ui/my_components/budget-options-modal";
 
-export default function NavBar() {
-  const { onClose } = useBudgetModal();
+export default function NavBar({ budgets }: { budgets: Budget[] }) {
   const pathname = usePathname();
   const { budgetId } = useParams();
 
+  // Use this if network is slow
+  // Timeout is set to 1 second in (root)
   // Effect is responsible for closing an initial modal when first budget is created.
-  useEffect(() => {
-    onClose();
-  }, []);
+  // useEffect(() => {
+  //   onClose();
+  // }, []);
 
   return (
     <>
       <section className="hidden md:block border-b">
         <div className="flex h-16 items-center px-4 font-semibold text-sm">
           <div className="flex justify-center items-center gap-2">
+            <BudgetOptionsModal items={budgets} />
             <Link
               href={`/${budgetId}`}
               className={cn(
@@ -48,6 +52,15 @@ export default function NavBar() {
             </Link>
           </div>
           <div className="ml-auto flex items-center space-x-4">
+            <ModeToggle />
+            <UserButton afterSignOutUrl="/sign-in" />
+          </div>
+        </div>
+      </section>
+      <section className="block md:hidden border-b">
+        <div className="flex items-center justify-between h-14 px-4">
+          <BudgetOptionsModal items={budgets} />
+          <div className="flex items-center justify-center gap-2">
             <ModeToggle />
             <UserButton afterSignOutUrl="/sign-in" />
           </div>
@@ -85,7 +98,6 @@ export default function NavBar() {
               )}
             />
           </Link>
-          <ModeToggle />
         </ul>
       </section>
     </>
