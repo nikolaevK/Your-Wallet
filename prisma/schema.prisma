@@ -17,4 +17,30 @@ model Budget {
   budgetName String  @unique
   createdAt DateTime @default(now())
   updatedAt   DateTime  @updatedAt
+  currencyId String 
+  currency Currency @relation("CurrencyToBudget", fields: [currencyId], references: [id])
+  categories Category[] @relation("CategoryToBudget")
+    
+  @@index([currencyId])
 }
+
+model Currency {
+  id String @id @default(uuid())
+  name String
+  code String @unique
+  symbol String
+  budgets Budget[] @relation("CurrencyToBudget")
+}
+
+model Category {
+  id String @id @default(uuid())
+  budgetId String
+  budget Budget @relation("CategoryToBudget", fields: [budgetId], references:[id])
+  categoryName String @unique
+  categoryLimit Decimal
+  createdAt DateTime @default(now())
+  updatedAt   DateTime  @updatedAt
+
+ @@index([budgetId])
+}
+
