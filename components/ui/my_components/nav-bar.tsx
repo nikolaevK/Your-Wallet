@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import { BarChart3, Blocks, LayoutDashboard } from "lucide-react";
+import { BarChart3, LayoutDashboard, PlusSquare } from "lucide-react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import BudgetOptionsModal from "@/components/ui/my_components/budget-options-modal";
 
@@ -79,7 +79,7 @@ export default function NavBar({ budgets }: { budgets: Budget[] }) {
             />
           </Link>
           <Link href={`/${budgetId}/new-entry`}>
-            <Blocks
+            <PlusSquare
               className={cn(
                 "h-8 w-8",
                 pathname === `/${budgetId}/new-entry`

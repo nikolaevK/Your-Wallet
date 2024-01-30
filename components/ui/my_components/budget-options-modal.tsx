@@ -2,7 +2,6 @@
 
 import { Budget } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
-import { revalidatePath } from "next/cache";
 import { useBudgetModal } from "@/hooks/use-budget-modal";
 import { useState } from "react";
 
