@@ -1,9 +1,9 @@
-import Categories from "./components /categories";
+import InputForms from "./components/input-forms";
 
 export default function NewEntry() {
   return (
-    <div className="w-full pt-6 md:px-4">
-      <Categories />
+    <div className="w-full pt-6 px-4">
+      <InputForms />
     </div>
   );
 }

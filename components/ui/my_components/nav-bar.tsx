@@ -57,7 +57,7 @@ export default function NavBar({ budgets }: { budgets: Budget[] }) {
           </div>
         </div>
       </section>
-      <section className="block md:hidden border-b dark:bg-secondary">
+      <section className="fixed block w-full top-0 z-10 md:hidden border-b bg-white dark:bg-secondary">
         <div className="flex items-center justify-between h-14 px-4">
           <BudgetOptionsModal items={budgets} />
           <div className="flex items-center justify-center gap-2">
@@ -66,7 +66,7 @@ export default function NavBar({ budgets }: { budgets: Budget[] }) {
           </div>
         </div>
       </section>
-      <section className="fixed block md:hidden bottom-0 w-full h-12 border-t z-10 dark:bg-secondary">
+      <section className="fixed block md:hidden bottom-0 w-full h-12 border-t z-10 bg-white dark:bg-secondary">
         <ul className="flex justify-between h-full items-center mx-6">
           <Link href={`/${budgetId}`}>
             <LayoutDashboard

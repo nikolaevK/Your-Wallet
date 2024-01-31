@@ -20,6 +20,7 @@ model Budget {
   currencyId String 
   currency Currency @relation("CurrencyToBudget", fields: [currencyId], references: [id])
   categories Category[] @relation("CategoryToBudget")
+  expenses Expense[] @relation("ExpenseToBudget")
     
   @@index([currencyId])
 }
@@ -38,9 +39,26 @@ model Category {
   budget Budget @relation("CategoryToBudget", fields: [budgetId], references:[id])
   categoryName String @unique
   categoryLimit Decimal
+  expenses Expense[] @relation("ExpenseToCategory")
   createdAt DateTime @default(now())
   updatedAt   DateTime  @updatedAt
 
  @@index([budgetId])
+}
+
+model Expense {
+  id String @id @default(uuid())
+  budgetId String 
+  budget Budget @relation("ExpenseToBudget", fields: [budgetId], references:[id])
+  categoryId String?
+  category Category? @relation("ExpenseToCategory", fields: [categoryId], references: [id])
+  amount Decimal
+  expenseName String
+  comments String?
+  createdAt DateTime @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([categoryId])
+  @@index([budgetId])
 }
 

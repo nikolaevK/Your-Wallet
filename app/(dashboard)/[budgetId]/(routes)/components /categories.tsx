@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import CategoryCart from "./category-cart";
-import CategoryPieChart from "./category-pie-chart";
 
 import {
   Carousel,
@@ -16,7 +15,7 @@ type Props = {};
 
 export default function Categories({}: Props) {
   return (
-    <Card className="w-[90%] md:w-full m-auto">
+    <Card className="w-full px-4">
       <CardHeader>
         <div className="flex justify-between items-center">
           <div className="flex justify-center items-center gap-2">
@@ -35,6 +34,7 @@ export default function Categories({}: Props) {
         <CategoryCart />
 
         {/* Extract in separate component */}
+        {/* check if is a server component */}
         <Carousel className="md:hidden ">
           <CarouselContent className="w-[200px]">
             <CarouselItem className="w-full">

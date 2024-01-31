@@ -19,7 +19,7 @@ const renderCustomizedLabel = ({
   outerRadius,
   percent,
   index,
-}) => {
+}: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.25;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -36,13 +36,7 @@ const renderCustomizedLabel = ({
     </text>
   );
 };
-export default function CategoryPieChart({}: Props) {
-  const [shouldAnimate, setShouldAnimate] = useState(false);
-
-  useEffect(() => {
-    setShouldAnimate(true);
-  }, []);
-
+export default function CategoryPieChart() {
   return (
     <PieChart id="test" width={120} height={120}>
       <Pie
@@ -52,7 +46,7 @@ export default function CategoryPieChart({}: Props) {
         outerRadius={50}
         fill="#8884d8"
         dataKey="value"
-        isAnimationActive={shouldAnimate}
+        isAnimationActive={false}
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
