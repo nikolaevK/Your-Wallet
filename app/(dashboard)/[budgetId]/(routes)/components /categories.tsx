@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import CategoryCart from "./category-cart";
+import CategoryCart from "./category-card";
 
 import {
   Carousel,
@@ -13,10 +13,6 @@ import {
 import prismadb from "@/lib/prismadb";
 import { Category, Prisma } from "@prisma/client";
 import { endOfMonth, format, startOfMonth } from "date-fns";
-
-type CategoryWithExpenses = Prisma.CategoryGetPayload<{
-  include: { expenses: true };
-}>;
 
 interface CategoriesProps {
   budgetId: string;
@@ -55,7 +51,7 @@ export default async function Categories({ budgetId }: CategoriesProps) {
       // Extended Type to Decimal | Number
       categoryLimit: Number(category.categoryLimit),
     };
-  }) as CategoryWithExpenses[];
+  });
 
   return (
     <Card className="w-full px-4">

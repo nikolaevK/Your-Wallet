@@ -6,9 +6,9 @@ interface NewEntryInterface {
 
 export default function NewEntry({ params: { budgetId } }: NewEntryInterface) {
   return (
-    <div className="w-full pt-6 px-4">
+    <section className="w-full pt-6 px-4">
       {/* @ts-expect-error Server Component */}
       <InputForms budgetId={budgetId} />
-    </div>
+    </section>
   );
 }

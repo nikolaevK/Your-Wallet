@@ -37,7 +37,7 @@ model Category {
   id String @id @default(uuid())
   budgetId String
   budget Budget @relation("CategoryToBudget", fields: [budgetId], references:[id])
-  categoryName String @unique
+  categoryName String 
   categoryLimit Decimal
   expenses Expense[] @relation("ExpenseToCategory")
   createdAt DateTime @default(now())

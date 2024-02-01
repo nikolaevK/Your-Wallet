@@ -40,7 +40,7 @@ export default async function InputForms({ budgetId }: { budgetId: string }) {
       <TabsContent value="category">
         <Card>
           <CardHeader>
-            <CardTitle>Categories</CardTitle>
+            <CardTitle>Category</CardTitle>
             <CardDescription>Add new category track expenses</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">

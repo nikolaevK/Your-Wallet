@@ -13,7 +13,7 @@ interface CategoryCartInterface {
   category: CategoryWithExpenses;
 }
 
-export default async function CategoryCart({
+export default async function CategoryCard({
   category,
 }: CategoryCartInterface) {
   // Extract currency information
@@ -66,7 +66,7 @@ export default async function CategoryCart({
           {currency?.symbol} <span>{totalExpenses}</span> /
           <span className="text-muted-foreground">
             {" "}
-            {category.categoryLimit as number}
+            {category.categoryLimit as any}
           </span>
         </div>
       </CardContent>
