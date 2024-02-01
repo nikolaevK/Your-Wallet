@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useParams } from "next/navigation";
+import { createNewExpense } from "@/actions/createNewExpense";
 
 import { format } from "date-fns";
 
@@ -34,6 +37,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Category } from "@prisma/client";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   expenseName: z.string().min(3, {
@@ -42,29 +48,46 @@ const formSchema = z.object({
   amount: z.string().min(3, {
     message: "Limit must be more or equal than 100.",
   }),
-  category: z.string().min(5, {
-    message: "Must choose a category.",
+  categoryId: z.string().min(5, {
+    message: "Must choose a category. Or create new one.",
   }),
-  comments: z.string(),
+  comments: z.string().optional(),
   createdAt: z.date().optional(),
 });
 
-export function CreateExpenseForm() {
+interface CreateExpenseFormInterface {
+  categories: Category[];
+}
+
+export function CreateExpenseForm({ categories }: CreateExpenseFormInterface) {
+  const [loading, setLoading] = useState(false);
+  const params = useParams();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       amount: "",
-      category: "",
-      comments: "",
+      categoryId: "",
+      comments: undefined,
       createdAt: undefined,
       expenseName: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setLoading(true);
+      const expense = await createNewExpense({
+        ...values,
+        budgetId: params.budgetId as string,
+      });
+      setLoading(false);
+      form.reset();
+      toast(`Expense ${expense?.expenseName} has been created`);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      window.alert(error);
+    }
   }
 
   return (
@@ -77,7 +100,7 @@ export function CreateExpenseForm() {
             <FormItem>
               <FormLabel>Expense Name</FormLabel>
               <FormControl>
-                <Input placeholder="name..." {...field} />
+                <Input placeholder="name..." disabled={loading} {...field} />
               </FormControl>
               <FormDescription>
                 This is a name which will be displayed.
@@ -93,7 +116,12 @@ export function CreateExpenseForm() {
             <FormItem>
               <FormLabel>Expense Amount</FormLabel>
               <FormControl>
-                <Input type="number" placeholder="amount" {...field} />
+                <Input
+                  type="number"
+                  placeholder="amount"
+                  disabled={loading}
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 This will be recorded as amount for this expense.
@@ -104,23 +132,30 @@ export function CreateExpenseForm() {
         />
         <FormField
           control={form.control}
-          name="category"
+          name="categoryId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Category</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
+                    <SelectValue
+                      placeholder={
+                        categories.length === 0
+                          ? "Create category"
+                          : "Select category"
+                      }
+                    />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
+                  {categories.map((category) => (
+                    <SelectItem value={category.id} key={category.id}>
+                      {category.categoryName}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
-              <FormDescription></FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -170,8 +205,33 @@ export function CreateExpenseForm() {
             </FormItem>
           )}
         />
-        <Button className="w-full" type="submit">
-          Record
+        <FormField
+          control={form.control}
+          name="comments"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Comments</FormLabel>
+              <FormControl>
+                <Textarea
+                  disabled={loading}
+                  placeholder="Write additional information"
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                You can write additional description about an expense
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button className="w-full" type="submit" disabled={loading}>
+          {loading ? (
+            <div className="animate-spin border-2 border-t-2 border-white-500 border-t-blue-600  h-5 w-5 border-spacing-1 rounded-full"></div>
+          ) : (
+            "Record"
+          )}
         </Button>
       </form>
     </Form>

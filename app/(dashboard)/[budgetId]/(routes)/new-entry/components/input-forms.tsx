@@ -12,9 +12,25 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CreateCategoryForm } from "./create-category-form";
 import { CreateExpenseForm } from "./create-expense-form";
+import prismadb from "@/lib/prismadb";
+import { Category } from "@prisma/client";
 
-export default function InputForms({}) {
-  console.log("server");
+export default async function InputForms({ budgetId }: { budgetId: string }) {
+  const result: Category[] = await prismadb.category.findMany({
+    where: {
+      budgetId,
+    },
+  });
+
+  // Adjust Type for the Decimal that comes from SQL server
+  const categories = result.map((category: Category) => {
+    return {
+      ...category,
+      // Extended Type to Decimal | Number
+      categoryLimit: Number(category.categoryLimit),
+    };
+  });
+
   return (
     <Tabs defaultValue="category" className="w-full my-14 md:my-0">
       <TabsList className="grid w-full grid-cols-2">
@@ -42,7 +58,7 @@ export default function InputForms({}) {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <CreateExpenseForm />
+            <CreateExpenseForm categories={categories || []} />
           </CardContent>
         </Card>
       </TabsContent>

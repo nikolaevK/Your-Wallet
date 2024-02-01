@@ -10,10 +10,21 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import prismadb from "@/lib/prismadb";
 
-type Props = {};
+interface CategoriesProps {
+  budgetId: string;
+}
 
-export default function Categories({}: Props) {
+export default async function Categories({ budgetId }: CategoriesProps) {
+  const categories = await prismadb.category.findMany({
+    where: {
+      budgetId,
+    },
+  });
+
+  console.log(categories);
+
   return (
     <Card className="w-full px-4">
       <CardHeader>

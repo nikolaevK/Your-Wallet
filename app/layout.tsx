@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import BudgetModal from "@/components/ui/my_components/budget-modal";
+import { Toaster } from "@/components/ui/sonner";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -50,6 +51,7 @@ export default async function RootLayout({
             <BudgetModal userId={userId} />
             {children}
           </ThemeProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
