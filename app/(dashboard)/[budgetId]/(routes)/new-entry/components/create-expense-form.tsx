@@ -45,8 +45,8 @@ const formSchema = z.object({
   expenseName: z.string().min(3, {
     message: "Name must be at least 3 characters.",
   }),
-  amount: z.string().min(3, {
-    message: "Limit must be more or equal than 100.",
+  amount: z.string().min(1, {
+    message: "Expense should be more than zero.",
   }),
   categoryId: z.string().min(5, {
     message: "Must choose a category. Or create new one.",

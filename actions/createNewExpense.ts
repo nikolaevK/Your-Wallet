@@ -35,6 +35,8 @@ export async function createNewExpense(props: createNewExpenseInterface) {
       },
     });
 
+    // reflect change in dashboard
+    revalidatePath(`/${budgetId}`);
     return expenses;
   } catch (error) {
     console.log(error);
