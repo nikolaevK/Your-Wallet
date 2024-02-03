@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Separator } from "@/components/ui/separator";
 import prismadb from "@/lib/prismadb";
-import { Prisma } from "@prisma/client";
+import { Currency, Prisma } from "@prisma/client";
 import CategoryPieChart from "./category-pie-chart";
 
 type CategoryWithExpenses = Prisma.CategoryGetPayload<{
@@ -11,24 +11,13 @@ type CategoryWithExpenses = Prisma.CategoryGetPayload<{
 
 interface CategoryCartInterface {
   category: CategoryWithExpenses;
+  currency: Currency;
 }
 
-export default async function CategoryCard({
+export default function CategoryCard({
   category,
+  currency,
 }: CategoryCartInterface) {
-  // Extract currency information
-  const budget = await prismadb.budget.findFirst({
-    where: {
-      id: category.budgetId,
-    },
-  });
-
-  const currency = await prismadb.currency.findFirst({
-    where: {
-      id: budget?.currencyId,
-    },
-  });
-
   const totalExpenses = category.expenses.reduce(
     (accumulator, currentValue) =>
       // Need to deal with decimal additions which cause Floating Point Numbers problem
@@ -62,12 +51,9 @@ export default async function CategoryCard({
       <Separator className="mb-2" />
       <CardContent className="flex flex-col items-center p-2">
         <CategoryPieChart data={data} />
-        <div>
+        <div className="text-xs md:text-sm">
           {currency?.symbol} <span>{totalExpenses}</span> /
-          <span className="text-muted-foreground">
-            {" "}
-            {category.categoryLimit as any}
-          </span>
+          <span className="text-primary"> {category.categoryLimit as any}</span>
         </div>
       </CardContent>
     </Card>

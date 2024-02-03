@@ -13,7 +13,7 @@ export default function CategoryPieChart({ data }: CategoryPieChartInterface) {
     <PieChart id="test" width={120} height={120}>
       <Pie
         data={data}
-        outerRadius={50}
+        // outerRadius={50}
         dataKey="value"
         isAnimationActive={false}
       >

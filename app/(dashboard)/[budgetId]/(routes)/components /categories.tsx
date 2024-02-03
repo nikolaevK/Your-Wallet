@@ -1,5 +1,5 @@
 import prismadb from "@/lib/prismadb";
-import { Category } from "@prisma/client";
+import { Category, Currency, Prisma } from "@prisma/client";
 import { endOfMonth, startOfMonth } from "date-fns";
 
 import {
@@ -14,12 +14,19 @@ import { Separator } from "@/components/ui/separator";
 import CategoryCart from "./category-card";
 import Link from "next/link";
 
+type CategoryWithExpenses = Prisma.CategoryGetPayload<{
+  include: { expenses: true };
+}>;
+
 interface CategoriesProps {
   budgetId: string;
+  currency: Currency;
 }
 
-export default async function Categories({ budgetId }: CategoriesProps) {
-  // TODO: Need to query monthly expenses inside include somehow
+export default async function Categories({
+  budgetId,
+  currency,
+}: CategoriesProps) {
   const result = await prismadb.category.findMany({
     where: {
       budgetId,
@@ -51,11 +58,11 @@ export default async function Categories({ budgetId }: CategoriesProps) {
       // Extended Type to Decimal | Number
       categoryLimit: Number(category.categoryLimit),
     };
-  });
+  }) as CategoryWithExpenses[];
 
   return (
     <Card className="w-full">
-      <CardHeader>
+      <CardHeader className="px-4 py-2">
         <div className="flex justify-between items-center">
           <div className="flex justify-center items-center gap-2">
             <CardTitle className="text-sm">Categories</CardTitle>
@@ -73,8 +80,13 @@ export default async function Categories({ budgetId }: CategoriesProps) {
         <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-6 justify-items-center gap-6">
           {categories &&
             categories.map((category) => {
-              /* @ts-expect-error Server Component */
-              return <CategoryCart key={category.id} category={category} />;
+              return (
+                <CategoryCart
+                  key={category.id}
+                  category={category}
+                  currency={currency}
+                />
+              );
             })}
         </div>
 
@@ -85,10 +97,7 @@ export default async function Categories({ budgetId }: CategoriesProps) {
               categories.map((category) => {
                 return (
                   <CarouselItem className="basis-1/2" key={category.id}>
-                    {
-                      /* @ts-expect-error Server Component */
-                      <CategoryCart category={category} />
-                    }
+                    {<CategoryCart category={category} currency={currency} />}
                   </CarouselItem>
                 );
               })}

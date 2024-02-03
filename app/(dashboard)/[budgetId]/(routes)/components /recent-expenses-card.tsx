@@ -28,11 +28,20 @@ export default async function RecentExpensesCard({
       amount: {
         lt: 0,
       },
+
       createdAt: {
         gte: startOfWeek(new Date()),
         lte: endOfWeek(new Date()),
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  const formatCurrency = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency.code,
   });
 
   return (
@@ -51,13 +60,12 @@ export default async function RecentExpensesCard({
           >
             <div className="flex justify-center items-center gap-2">
               <div className="mt-1">
-                <MinusCircle color="#ff0000" className="h-5 w-5 " />
+                <MinusCircle color="#ff0000" className="h-3 w-3" />
               </div>
-              <div>{expense.expenseName}</div>
+              <span className="text-xs">{expense.expenseName}</span>
             </div>
-            <span className="font-medium">
-              {currency.symbol}
-              {Math.abs(Number(expense.amount))}
+            <span className="font-medium text-primary text-xs">
+              {formatCurrency.format(Math.abs(Number(expense.amount)))}
             </span>
           </div>
         ))}
