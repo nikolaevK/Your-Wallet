@@ -25,7 +25,7 @@ export default async function Dashboard({
   });
 
   return (
-    <section className="w-full pt-6 px-4 mt-14 md:mt-0">
+    <section className="w-full pt-6 px-4 my-14 md:mt-0">
       <div className="flex flex-col md:grid md:grid-cols-4 gap-4 mb-4">
         {/* @ts-expect-error Server Component */}
         <OverviewCard budgetId={budgetId} currency={currency} />

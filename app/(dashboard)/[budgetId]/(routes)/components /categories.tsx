@@ -1,18 +1,18 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import CategoryCart from "./category-card";
+import prismadb from "@/lib/prismadb";
+import { Category } from "@prisma/client";
+import { endOfMonth, startOfMonth } from "date-fns";
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
-import prismadb from "@/lib/prismadb";
-import { Category, Prisma } from "@prisma/client";
-import { endOfMonth, format, startOfMonth } from "date-fns";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import CategoryCart from "./category-card";
+import Link from "next/link";
 
 interface CategoriesProps {
   budgetId: string;
@@ -54,20 +54,23 @@ export default async function Categories({ budgetId }: CategoriesProps) {
   });
 
   return (
-    <Card className="w-full px-4">
+    <Card className="w-full">
       <CardHeader>
         <div className="flex justify-between items-center">
           <div className="flex justify-center items-center gap-2">
-            <CardTitle>Categories</CardTitle>
+            <CardTitle className="text-sm">Categories</CardTitle>
             <Separator orientation="vertical" className="h-6" />
-            <div>View all</div>
+            <a className="text-xs">View all</a>
           </div>
-          <Button>Create</Button>
+          <Link href={`/${budgetId}/new-entry`}>
+            <Button variant="link">Create</Button>
+          </Link>
         </div>
       </CardHeader>
       <Separator />
-      <CardContent className="p-8">
-        <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <CardContent className="p-4">
+        {/* full screen */}
+        <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-6 justify-items-center gap-6">
           {categories &&
             categories.map((category) => {
               /* @ts-expect-error Server Component */
@@ -77,11 +80,11 @@ export default async function Categories({ budgetId }: CategoriesProps) {
 
         {/* Mobile Css */}
         <Carousel className="md:hidden ">
-          <CarouselContent className="w-[200px]">
+          <CarouselContent>
             {categories &&
               categories.map((category) => {
                 return (
-                  <CarouselItem className="w-full" key={category.id}>
+                  <CarouselItem className="basis-1/2" key={category.id}>
                     {
                       /* @ts-expect-error Server Component */
                       <CategoryCart category={category} />
@@ -90,8 +93,8 @@ export default async function Categories({ budgetId }: CategoriesProps) {
                 );
               })}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          {/* <CarouselPrevious />
+          <CarouselNext /> */}
         </Carousel>
       </CardContent>
     </Card>
