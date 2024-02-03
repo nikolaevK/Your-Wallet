@@ -28,10 +28,6 @@ export default async function RootLayout({
 }>) {
   const { userId } = auth();
 
-  if (!userId) {
-    redirect("/sign-in");
-  }
-
   return (
     <ClerkProvider>
       <html lang="en">
@@ -48,7 +44,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <BudgetModal userId={userId} />
+            {userId && <BudgetModal userId={userId} />}
             {children}
           </ThemeProvider>
           <Toaster />

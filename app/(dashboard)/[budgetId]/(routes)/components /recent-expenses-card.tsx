@@ -1,16 +1,67 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import React from "react";
+import prismadb from "@/lib/prismadb";
+import { endOfWeek, startOfWeek } from "date-fns";
 
-type Props = {};
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
-export default function RecentExpensesCard({}: Props) {
+import { MinusCircle } from "lucide-react";
+import { Currency } from "@prisma/client";
+
+interface RecentExpensesCardInterface {
+  budgetId: string;
+  currency: Currency;
+}
+
+export default async function RecentExpensesCard({
+  budgetId,
+  currency,
+}: RecentExpensesCardInterface) {
+  // Fetching expenses for current week
+  const expenses = await prismadb.expense.findMany({
+    where: {
+      budgetId,
+      amount: {
+        lt: 0,
+      },
+      createdAt: {
+        gte: startOfWeek(new Date()),
+        lte: endOfWeek(new Date()),
+      },
+    },
+  });
+
   return (
-    <Card>
+    <Card className="h-[250px] md:h-auto md:max-h-[430px] overflow-auto">
       <CardHeader>
         <CardTitle className="text-sm">Recent Expenses</CardTitle>
+        <CardDescription>
+          You made {expenses.length} transactions this week.
+        </CardDescription>
       </CardHeader>
-      <CardContent className="p-0"></CardContent>
+      <CardContent>
+        {expenses.map((expense) => (
+          <div
+            key={expense.id}
+            className="flex justify-between items-center pb-2"
+          >
+            <div className="flex justify-center items-center gap-2">
+              <div className="mt-1">
+                <MinusCircle color="#ff0000" className="h-5 w-5 " />
+              </div>
+              <div>{expense.expenseName}</div>
+            </div>
+            <span className="font-medium">
+              {currency.symbol}
+              {Math.abs(Number(expense.amount))}
+            </span>
+          </div>
+        ))}
+      </CardContent>
     </Card>
   );
 }

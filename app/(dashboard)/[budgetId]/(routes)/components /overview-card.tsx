@@ -1,31 +1,22 @@
 import getMonthlyExpenses from "@/actions/getMonthlyExpenses";
-import prismadb from "@/lib/prismadb";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Currency } from "@prisma/client";
 import Overview from "./Overview";
 
 interface OverviewCardInterface {
   budgetId: string;
+  currency: Currency;
 }
 
 export default async function OverviewCard({
   budgetId,
+  currency,
 }: OverviewCardInterface) {
   const monthlyExpenses = await getMonthlyExpenses(budgetId);
-  // Extract currency information
-  const budget = await prismadb.budget.findFirst({
-    where: {
-      id: budgetId,
-    },
-  });
 
-  const currency = await prismadb.currency.findFirst({
-    where: {
-      id: budget?.currencyId,
-    },
-  });
   return (
-    <Card className="col-span-3">
+    <Card className="col-span-3 max-h-[430px]">
       <CardHeader>
         <CardTitle className="text-sm">Overview</CardTitle>
       </CardHeader>
