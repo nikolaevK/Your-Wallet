@@ -18,7 +18,7 @@ export default async function OverviewCard({
   return (
     <Card className="col-span-3 max-h-[430px]">
       <CardHeader>
-        <CardTitle className="text-sm">Overview</CardTitle>
+        <CardTitle className="text-sm">Monthly Overview</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
         <div className="w-[320px] md:w-full ">

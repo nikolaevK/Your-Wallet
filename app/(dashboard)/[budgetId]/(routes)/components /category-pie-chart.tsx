@@ -2,7 +2,7 @@
 
 import { PieChart, Pie, Cell } from "recharts";
 
-const COLORS = ["hsl(142.1 76.2% 36.3%)", "hsl(240 4.8% 95.9%)"];
+const COLORS = ["hsl(142.1 76.2% 36.3%)", "#d0ecda"];
 
 interface CategoryPieChartInterface {
   data: Array<Record<number, { name: string; value: number }>>;

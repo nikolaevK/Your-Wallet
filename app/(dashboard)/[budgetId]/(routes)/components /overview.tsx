@@ -7,6 +7,7 @@ interface OverviewInterface {
   data: Record<number, { name: string; total: number }>[];
   currency: string;
 }
+type Dimensions = { width: number; height: number };
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -15,8 +16,6 @@ function getWindowDimensions() {
     height,
   };
 }
-
-type Dimensions = { width: number; height: number };
 
 export default function Overview({ data, currency }: OverviewInterface) {
   const [windowDimensions, setWindowDimensions] = useState<Dimensions>();

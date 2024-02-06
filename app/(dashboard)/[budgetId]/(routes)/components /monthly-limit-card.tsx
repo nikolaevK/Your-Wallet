@@ -53,7 +53,7 @@ export default async function MonthlyLimitCard({
   const ratio = Math.round((monthlyTotalExpenses / Number(monthlyLimit)) * 100);
 
   return (
-    <Card className="w-[160px] md:w-[250px] mb-4">
+    <Card className="w-full ">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
           <CardTitle className="text-xs md:text-sm">Monthly Limit</CardTitle>
@@ -64,7 +64,7 @@ export default async function MonthlyLimitCard({
       </CardHeader>
       <CardContent className="flex flex-col gap-2 font-bold text-sm  md:text-2xl">
         <span>{formatCurrency.format(monthlyLimit)}</span>
-        <Progress value={ratio} />
+        <Progress value={ratio} className="bg-[#d0ecda]" />
       </CardContent>
     </Card>
   );

@@ -30,7 +30,7 @@ export default async function SavingsCard({
   });
 
   return (
-    <Card className="w-[160px] md:w-[250px] mb-4 ">
+    <Card className="w-full mb-4 ">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
           <CardTitle className="text-xs md:text-sm">Total Savings</CardTitle>

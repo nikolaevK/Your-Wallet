@@ -39,7 +39,9 @@ import {
 import { Check, ChevronsUpDown } from "lucide-react";
 
 const formSchema = z.object({
-  budgetName: z.string().min(3),
+  budgetName: z.string().min(3, {
+    message: "Name must be at least 3 characters.",
+  }),
   currency: z.object({
     name: z.string(),
     code: z.string(),
