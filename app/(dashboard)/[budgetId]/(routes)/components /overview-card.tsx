@@ -21,7 +21,7 @@ export default async function OverviewCard({
         <CardTitle className="text-sm">Monthly Overview</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="w-[320px] md:w-full ">
+        <div className="w-full">
           <Overview data={monthlyExpenses || []} currency={currency!.symbol} />
         </div>
       </CardContent>

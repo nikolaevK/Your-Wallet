@@ -26,7 +26,7 @@ export default function Overview({ data, currency }: OverviewInterface) {
 
   return windowDimensions ? (
     <ResponsiveContainer
-      width={windowDimensions.width < 500 ? "100%" : "100%"}
+      width="100%"
       height={windowDimensions.height < 700 ? 250 : 350}
     >
       <BarChart data={data}>

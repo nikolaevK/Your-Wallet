@@ -1,19 +1,18 @@
+import prismadb from "@/lib/prismadb";
+import { Category } from "@prisma/client";
+
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CreateCategoryForm } from "./create-category-form";
 import { CreateExpenseForm } from "./create-expense-form";
-import prismadb from "@/lib/prismadb";
-import { Category } from "@prisma/client";
+import AddIncomeForm from "./add-income-form";
 
 export default async function InputForms({ budgetId }: { budgetId: string }) {
   const result: Category[] = await prismadb.category.findMany({
@@ -32,10 +31,11 @@ export default async function InputForms({ budgetId }: { budgetId: string }) {
   });
 
   return (
-    <Tabs defaultValue="category" className="w-full my-14 md:my-0">
-      <TabsList className="grid w-full grid-cols-2">
+    <Tabs defaultValue="category" className="w-full mt-14 pb-20 md:my-0">
+      <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="category">Add Category</TabsTrigger>
         <TabsTrigger value="expense">Add Expense</TabsTrigger>
+        <TabsTrigger value="income">Add Income</TabsTrigger>
       </TabsList>
       <TabsContent value="category">
         <Card>
@@ -45,7 +45,6 @@ export default async function InputForms({ budgetId }: { budgetId: string }) {
           </CardHeader>
           <CardContent className="space-y-2">
             <CreateCategoryForm />
-            <div></div>
           </CardContent>
         </Card>
       </TabsContent>
@@ -59,6 +58,17 @@ export default async function InputForms({ budgetId }: { budgetId: string }) {
           </CardHeader>
           <CardContent className="space-y-2">
             <CreateExpenseForm categories={categories || []} />
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="income">
+        <Card>
+          <CardHeader>
+            <CardTitle>Income</CardTitle>
+            <CardDescription>New income</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <AddIncomeForm />
           </CardContent>
         </Card>
       </TabsContent>
