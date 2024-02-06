@@ -2,6 +2,7 @@ import { getWeeklyExpenses } from "@/actions/getWeeklyExpenses";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Currency } from "@prisma/client";
 import { getDay } from "date-fns";
+import { Variable } from "lucide-react";
 import ExpensesChart from "./expenses-chart";
 
 interface WeeklyExpensesChartInterface {
@@ -29,6 +30,7 @@ export default async function WeeklyExpensesChart({
 }: WeeklyExpensesChartInterface) {
   const expenses = await getWeeklyExpenses(budgetId);
 
+  // TODO: Refactor this reduce with Variable
   // Add all expenses for each particular day based on createAt
   const graphDataToDisplay = expenses.reduce(
     (accumulator, currentValue) => {

@@ -1,6 +1,4 @@
-import prismadb from "@/lib/prismadb";
 import { Category, Currency, Prisma } from "@prisma/client";
-import { endOfMonth, startOfMonth } from "date-fns";
 
 import {
   Carousel,
@@ -13,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import CategoryCart from "./category-card";
 import Link from "next/link";
+import { getCurrentMonthlyExpensesForEachCategory } from "@/actions/getCurrentMonthlyExpensesForEachCategory";
 
 type CategoryWithExpenses = Prisma.CategoryGetPayload<{
   include: { expenses: true };
@@ -27,29 +26,7 @@ export default async function Categories({
   budgetId,
   currency,
 }: CategoriesProps) {
-  const result = await prismadb.category.findMany({
-    where: {
-      budgetId,
-    },
-    include: {
-      expenses: {
-        select: {
-          amount: true,
-        },
-        where: {
-          // Less than zero getting expenses with negative nums
-          amount: {
-            lt: 0,
-          },
-          // gets expenses which are made for current month
-          createdAt: {
-            gte: startOfMonth(new Date()),
-            lte: endOfMonth(new Date()),
-          },
-        },
-      },
-    },
-  });
+  const result = await getCurrentMonthlyExpensesForEachCategory(budgetId);
 
   // Adjust Type for the Decimal that comes from SQL server
   const categories = result.map((category: Category) => {

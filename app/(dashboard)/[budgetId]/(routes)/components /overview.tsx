@@ -1,7 +1,14 @@
 "use client";
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
-import { useState, useEffect, Suspense } from "react";
+import {
+  Bar,
+  BarChart,
+  LabelList,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { useState, useEffect } from "react";
 
 interface OverviewInterface {
   data: Record<number, { name: string; total: number }>[];
@@ -44,7 +51,14 @@ export default function Overview({ data, currency }: OverviewInterface) {
           axisLine={false}
           tickFormatter={(value) => `${currency}${value}`}
         />
-        <Bar dataKey="total" fill="#16a34a" radius={[2, 2, 0, 0]} />
+        <Bar dataKey="total" fill="#16a34a" radius={[2, 2, 0, 0]}>
+          <LabelList
+            dataKey="total"
+            position="top"
+            fontSize={8}
+            className="pt-2"
+          />
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
   ) : (

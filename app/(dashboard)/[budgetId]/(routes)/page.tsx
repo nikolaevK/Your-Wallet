@@ -1,3 +1,4 @@
+import { getCurrency } from "@/actions/getCurrency";
 import prismadb from "@/lib/prismadb";
 import React from "react";
 import Categories from "./components /categories";
@@ -14,18 +15,7 @@ interface DashboardInterface {
 export default async function Dashboard({
   params: { budgetId },
 }: DashboardInterface) {
-  // Extract currency information
-  const budget = await prismadb.budget.findFirst({
-    where: {
-      id: budgetId,
-    },
-  });
-
-  const currency = await prismadb.currency.findFirst({
-    where: {
-      id: budget?.currencyId,
-    },
-  });
+  const currency = await getCurrency(budgetId);
 
   return (
     <section className="w-full pt-6 px-4 mt-14 mb-20 md:mt-0">

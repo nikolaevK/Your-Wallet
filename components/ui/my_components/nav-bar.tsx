@@ -50,6 +50,17 @@ export default function NavBar({ budgets }: { budgets: Budget[] }) {
             >
               <p>New Entry</p>
             </Link>
+            <Link
+              href={`/${budgetId}/details`}
+              className={cn(
+                "transition-colors dark:hover:text-white hover:text-black px-4 py-1 rounded-full",
+                pathname === `/${budgetId}/details`
+                  ? "text-black dark:text-white bg-gray-100 dark:bg-secondary"
+                  : "text-muted-foreground"
+              )}
+            >
+              <p>Details</p>
+            </Link>
           </div>
           <div className="ml-auto flex items-center space-x-4">
             <ModeToggle />
@@ -88,11 +99,11 @@ export default function NavBar({ budgets }: { budgets: Budget[] }) {
               )}
             />
           </Link>
-          <Link href={"/summary"}>
+          <Link href={`/${budgetId}/details`}>
             <BarChart3
               className={cn(
                 "h-8 w-8",
-                pathname === "/add-expense"
+                pathname === `/${budgetId}/details`
                   ? "text-black dark:text-white"
                   : "text-muted-foreground"
               )}

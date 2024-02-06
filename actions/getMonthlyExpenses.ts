@@ -1,5 +1,5 @@
 import prismadb from "@/lib/prismadb";
-import { endOfYear, startOfMonth, startOfYear } from "date-fns";
+import { endOfYear, startOfYear } from "date-fns";
 
 export default async function getMonthlyExpenses(budgetId: string) {
   const expenses = await prismadb.expense.findMany({
@@ -23,7 +23,10 @@ export default async function getMonthlyExpenses(budgetId: string) {
 
     let expenseAmount = Math.abs(Number(expense.amount));
     // adding expenses for a particular month
-    monthlySpending[month] = (monthlySpending[month] || 0) + expenseAmount;
+    // Need to deal with decimal additions which cause Floating Point Numbers problem
+    monthlySpending[month] = Number(
+      ((monthlySpending[month] || 0) + expenseAmount).toFixed(2)
+    );
   }
 
   const monthsData: { name: string; total: number }[] = [

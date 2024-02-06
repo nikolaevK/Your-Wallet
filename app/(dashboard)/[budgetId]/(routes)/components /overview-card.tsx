@@ -20,7 +20,7 @@ export default async function OverviewCard({
       <CardHeader>
         <CardTitle className="text-sm">Monthly Overview</CardTitle>
       </CardHeader>
-      <CardContent className="p-0">
+      <CardContent className="p-0 md:p-4">
         <div className="w-full">
           <Overview data={monthlyExpenses || []} currency={currency!.symbol} />
         </div>
