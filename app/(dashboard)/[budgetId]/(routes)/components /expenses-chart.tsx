@@ -60,7 +60,7 @@ export default function ExpensesChart({ data, currency }: ExpensesChart) {
           </>
         )}
 
-        <Tooltip />
+        <Tooltip labelClassName="text-black" />
         <Area
           type="monotone"
           dataKey="amount"
