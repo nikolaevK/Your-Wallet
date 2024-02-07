@@ -1,14 +1,19 @@
 "use client";
 
+import { formatCurrency } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
+import { formatRelative } from "date-fns";
+import { es, ru, enUS } from "date-fns/locale";
 import ExpenseActions from "./expense-actions";
 
 export type Expense = {
   id: string;
-  amount: string;
+  budgetId: string;
+  amount: number;
   expenseName: string;
   createdAt: string;
   comments?: string;
+  currencyCode: string;
 };
 
 export const columns: ColumnDef<Expense>[] = [
@@ -19,12 +24,23 @@ export const columns: ColumnDef<Expense>[] = [
   {
     accessorKey: "amount",
     header: "Amount",
+    cell: ({ row }) => {
+      return (
+        <span>
+          {formatCurrency(row.original.amount, row.original.currencyCode)}
+        </span>
+      );
+    },
   },
   {
     accessorKey: "createdAt",
     header: "Date",
     cell: ({ row }) => (
-      <span className="text-primary">{row.original.createdAt}</span>
+      <span className="text-primary">
+        {formatRelative(new Date(row.original.createdAt), new Date(), {
+          locale: row.original.currencyCode === "RUB" ? ru : enUS,
+        })}
+      </span>
     ),
   },
   {

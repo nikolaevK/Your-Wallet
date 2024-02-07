@@ -18,7 +18,7 @@ export default async function DetailsTabs({
 
   const expenses = result.map((expense) => ({
     ...expense,
-    amount: formatCurrency(expense.amount, currency.code),
+    currencyCode: currency.code,
   }));
 
   return (

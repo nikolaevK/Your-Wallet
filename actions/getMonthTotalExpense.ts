@@ -21,6 +21,5 @@ export async function getMonthTotalExpense(budgetId: string) {
       },
     },
   });
-
   return amount;
 }

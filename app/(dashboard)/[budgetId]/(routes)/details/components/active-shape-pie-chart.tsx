@@ -49,7 +49,7 @@ export default function ActiveShapePieChart({
           data={data}
           cx="50%"
           cy="50%"
-          innerRadius={windowDimensions.height < 700 ? 40 : 60}
+          innerRadius={windowDimensions.width < 500 ? 40 : 60}
           outerRadius={windowDimensions.width < 500 ? 60 : 80}
           fill="hsl(142.1 76.2% 36.3%)"
           dataKey="value"

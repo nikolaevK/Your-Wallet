@@ -15,6 +15,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Expense } from "./Columns";
+import { ExpenseDrawer } from "./expense-drawer";
 
 interface ExpenseActionsInterface {
   expense: Expense;
@@ -22,6 +23,7 @@ interface ExpenseActionsInterface {
 
 export default function ExpenseActions({ expense }: ExpenseActionsInterface) {
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
   return (
     <>
@@ -31,6 +33,7 @@ export default function ExpenseActions({ expense }: ExpenseActionsInterface) {
         onConfirm={() => {}}
         loading={loading}
       />
+      <ExpenseDrawer open={open} setOpen={setOpen} expense={expense} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-5 md:h-8 w-5 md:w-8 p-0">
@@ -40,7 +43,7 @@ export default function ExpenseActions({ expense }: ExpenseActionsInterface) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpen(true)}>
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setConfirmationModalOpen(true)}>

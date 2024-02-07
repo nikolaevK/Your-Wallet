@@ -1,5 +1,5 @@
 import prismadb from "@/lib/prismadb";
-import { endOfMonth, startOfMonth, formatRelative } from "date-fns";
+import { endOfMonth, startOfMonth } from "date-fns";
 
 export async function getExpensesForCurrentMonth(budgetId: string) {
   if (!budgetId) throw new Error("budgetId is required");
@@ -15,14 +15,18 @@ export async function getExpensesForCurrentMonth(budgetId: string) {
         lte: endOfMonth(new Date()),
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   const expenses = results.map((expense) => ({
     id: expense.id,
+    budgetId: expense.budgetId,
     expenseName: expense.expenseName,
     amount: Math.abs(Number(expense.amount)),
-    createdAt: formatRelative(new Date(expense.createdAt), new Date()),
-    comments: expense.comments ? expense.comments : "",
+    createdAt: expense.createdAt.toString(),
+    comments: expense.comments ? expense.comments : undefined,
   }));
 
   return expenses;
