@@ -64,7 +64,6 @@ export async function getExpensesForCurrentMonth(
     createdAt: expense.createdAt.toString(),
     comments: expense.comments ? expense.comments : undefined,
   }));
-  revalidatePath(`/${budgetId}`);
-  revalidatePath(`/${budgetId}/details`);
+
   return expenses;
 }
