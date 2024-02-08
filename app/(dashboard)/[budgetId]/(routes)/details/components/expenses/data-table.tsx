@@ -22,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { DatePickerWithRange } from "./date-range-picker";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -31,10 +32,12 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({
   columns,
-  data,
+  data: initialData,
   searchKey,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+  const [data, setData] = useState(initialData);
 
   const table = useReactTable({
     data,
@@ -50,7 +53,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex flex-col md:flex-row gap-2 items-center justify-between py-4">
         <Input
           placeholder="Search"
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
@@ -59,6 +62,7 @@ export function DataTable<TData, TValue>({
           }
           className="md:max-w-sm"
         />
+        <DatePickerWithRange setData={setData} />
       </div>
       <div className="rounded-md border">
         <Table>

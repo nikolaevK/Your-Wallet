@@ -14,7 +14,7 @@ export default async function DetailsTabs({
   budgetId,
   currency,
 }: DetailsTabsInterface) {
-  const result = await getExpensesForCurrentMonth(budgetId);
+  const result = await getExpensesForCurrentMonth(budgetId, undefined);
 
   const expenses = result.map((expense) => ({
     ...expense,

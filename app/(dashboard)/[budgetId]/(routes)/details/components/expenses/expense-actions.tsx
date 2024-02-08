@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteExpense } from "@/actions/deleteExpense";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,6 +14,7 @@ import AlertModal from "@/components/ui/my_components/AlertModal";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import { Expense } from "./Columns";
 import { ExpenseDrawer } from "./expense-drawer";
@@ -25,12 +27,27 @@ export default function ExpenseActions({ expense }: ExpenseActionsInterface) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
+
+  async function deleteExp() {
+    try {
+      setLoading(true);
+      const result = await deleteExpense(expense.id, expense.budgetId);
+      setLoading(false);
+      toast(`Expense ${result?.expenseName} has been deleted`);
+      setConfirmationModalOpen(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      window.alert(error);
+    }
+  }
+
   return (
     <>
       <AlertModal
         isOpen={confirmationModalOpen}
         onClose={() => setConfirmationModalOpen(false)}
-        onConfirm={() => {}}
+        onConfirm={deleteExp}
         loading={loading}
       />
       <ExpenseDrawer open={open} setOpen={setOpen} expense={expense} />

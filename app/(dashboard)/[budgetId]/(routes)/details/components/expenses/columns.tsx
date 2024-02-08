@@ -3,7 +3,7 @@
 import { formatCurrency } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatRelative } from "date-fns";
-import { es, ru, enUS } from "date-fns/locale";
+import { ru, enUS } from "date-fns/locale";
 import ExpenseActions from "./expense-actions";
 
 export type Expense = {
