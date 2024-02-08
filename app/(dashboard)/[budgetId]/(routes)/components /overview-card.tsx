@@ -2,7 +2,7 @@ import getMonthlyExpenses from "@/actions/getMonthlyExpenses";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Currency } from "@prisma/client";
-import Overview from "./Overview";
+import Overview from "./overview";
 
 interface OverviewCardInterface {
   budgetId: string;
