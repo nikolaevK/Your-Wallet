@@ -4,8 +4,6 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useParams } from "next/navigation";
-import { createNewExpense } from "@/actions/createNewExpense";
 
 import { format } from "date-fns";
 
@@ -32,7 +30,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 
 import { Textarea } from "@/components/ui/textarea";
-import { Category } from "@prisma/client";
 import { toast } from "sonner";
 import { Expense } from "./columns";
 import { updateExpense } from "@/actions/updateExpense";

@@ -1,6 +1,5 @@
 import { getExpensesForCurrentMonth } from "@/actions/getExpensesForCurrentMonth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { formatCurrency } from "@/lib/utils";
 import { Currency } from "@prisma/client";
 import { columns } from "./expenses/columns";
 import { DataTable } from "./expenses/data-table";

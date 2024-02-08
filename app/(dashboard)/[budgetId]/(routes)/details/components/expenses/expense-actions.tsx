@@ -7,16 +7,15 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import AlertModal from "@/components/ui/my_components/AlertModal";
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
+
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { Expense } from "./Columns";
+import { Expense } from "./columns";
 import { ExpenseDrawer } from "./expense-drawer";
 
 interface ExpenseActionsInterface {

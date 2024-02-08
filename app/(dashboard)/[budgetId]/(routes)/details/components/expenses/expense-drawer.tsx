@@ -1,7 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,7 +7,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Drawer,
@@ -19,7 +16,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useEffect, useState } from "react";
 import { UpdateExpenseForm } from "./update-expense-form";
@@ -59,7 +55,8 @@ export function ExpenseDrawer({
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+              Make changes to your profile here. Click save when you&apos;re
+              done.
             </DialogDescription>
           </DialogHeader>
           <UpdateExpenseForm
@@ -78,7 +75,7 @@ export function ExpenseDrawer({
         <DrawerHeader className="text-left">
           <DrawerTitle>Edit expense</DrawerTitle>
           <DrawerDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you&apos;re done.
           </DrawerDescription>
         </DrawerHeader>
         <UpdateExpenseForm
