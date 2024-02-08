@@ -73,7 +73,6 @@ export function UpdateExpenseForm({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     try {
       setLoading(true);
       await updateExpense({

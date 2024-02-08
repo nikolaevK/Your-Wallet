@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -38,6 +38,12 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const [data, setData] = useState(initialData);
+
+  // this is needed in order to update the state with new data
+  // when user edits expense
+  useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
 
   const table = useReactTable({
     data,
