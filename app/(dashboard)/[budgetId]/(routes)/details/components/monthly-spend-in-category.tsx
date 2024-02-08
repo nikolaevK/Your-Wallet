@@ -30,7 +30,7 @@ export default async function MonthlySpendInCategory({
         Number((accumulator + Math.abs(Number(expense.amount))).toFixed(2)),
       0
     );
-    category.expenses = [{ amount: sum }] as { amount: number }[];
+    category.expenses = [{ amount: sum }];
   });
 
   const chartData = currentMonthlyExpenses.map((category) => {
