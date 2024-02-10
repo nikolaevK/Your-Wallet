@@ -13,7 +13,7 @@ import CategoryCart from "./category-card";
 import Link from "next/link";
 import { getCurrentMonthlyExpensesForEachCategory } from "@/actions/getCurrentMonthlyExpensesForEachCategory";
 
-type Expenses = Prisma.CategoryGetPayload<{
+type CategoryWithExpense = Prisma.CategoryGetPayload<{
   include: { expenses: true };
 }>;
 
@@ -28,15 +28,14 @@ export default async function Categories({
 }: CategoriesProps) {
   const result = await getCurrentMonthlyExpensesForEachCategory(budgetId);
 
-  // TODO: Fix the type of Category which includes Expenses
   // Adjust Type for the Decimal that comes from SQL server
-  const categories = result.map((category: Category) => {
+  const categories: CategoryWithExpense[] = result.map((category) => {
     return {
       ...category,
       // Extended Type to Decimal | Number
       categoryLimit: Number(category.categoryLimit),
     };
-  }) as any;
+  });
 
   return (
     <Card className="w-full">
@@ -45,7 +44,11 @@ export default async function Categories({
           <div className="flex justify-center items-center gap-2">
             <CardTitle className="text-sm">Categories</CardTitle>
             <Separator orientation="vertical" className="h-6" />
-            <a className="text-xs">View all</a>
+            <Link href={`/${budgetId}/details`}>
+              <Button variant="link" className="text-xs p-0">
+                View all
+              </Button>
+            </Link>
           </div>
           <Link href={`/${budgetId}/new-entry`}>
             <Button variant="link">Create</Button>

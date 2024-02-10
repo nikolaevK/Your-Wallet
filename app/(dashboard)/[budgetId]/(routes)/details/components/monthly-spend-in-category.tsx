@@ -1,8 +1,7 @@
 import { getCurrentMonthlyExpensesForEachCategory } from "@/actions/getCurrentMonthlyExpensesForEachCategory";
 import { getMonthTotalExpense } from "@/actions/getMonthTotalExpense";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Currency, Expense } from "@prisma/client";
+import { Currency, Category } from "@prisma/client";
 import ActiveShapePieChart from "./active-shape-pie-chart";
 
 interface MonthlySpendInCategoryInterface {
@@ -14,13 +13,13 @@ export default async function MonthlySpendInCategory({
   budgetId,
   currency,
 }: MonthlySpendInCategoryInterface) {
-  const currentMonthlyExpenses = await getCurrentMonthlyExpensesForEachCategory(
-    budgetId
-  );
+  const result = await Promise.all([
+    getCurrentMonthlyExpensesForEachCategory(budgetId),
+    getMonthTotalExpense(budgetId),
+  ]);
 
-  const totalWeeklyExpense = Math.abs(
-    Number(await getMonthTotalExpense(budgetId))
-  );
+  const currentMonthlyExpenses = result[0];
+  const totalWeeklyExpense = Math.abs(Number(result[1]));
 
   // Sum all current expenses for each category
   currentMonthlyExpenses.forEach((category) => {
@@ -30,7 +29,7 @@ export default async function MonthlySpendInCategory({
         Number((accumulator + Math.abs(Number(expense.amount))).toFixed(2)),
       0
     );
-    category.expenses = [{ amount: sum }];
+    category.expenses = [{ amount: sum }] as any[];
   });
 
   const chartData = currentMonthlyExpenses.map((category) => {

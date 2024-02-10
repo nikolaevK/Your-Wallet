@@ -1,7 +1,5 @@
 "use client";
 
-import { deleteExpense } from "@/actions/deleteExpense";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import AlertModal from "@/components/ui/my_components/AlertModal";
+import { deleteExpense } from "@/actions/deleteExpense";
+import { Button } from "@/components/ui/button";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { useState } from "react";

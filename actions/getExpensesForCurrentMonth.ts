@@ -2,7 +2,6 @@
 
 import prismadb from "@/lib/prismadb";
 import { endOfMonth, startOfMonth } from "date-fns";
-import { revalidatePath } from "next/cache";
 import { DateRange } from "react-day-picker";
 
 export async function getExpensesForCurrentMonth(

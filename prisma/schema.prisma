@@ -28,7 +28,7 @@ model Budget {
 model Currency {
   id String @id @default(uuid())
   name String
-  code String @unique
+  code String 
   symbol String
   budgets Budget[] @relation("CurrencyToBudget")
 }

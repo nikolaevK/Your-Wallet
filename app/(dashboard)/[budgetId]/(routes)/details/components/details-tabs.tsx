@@ -1,6 +1,7 @@
 import { getExpensesForCurrentMonth } from "@/actions/getExpensesForCurrentMonth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Currency } from "@prisma/client";
+import AllCategoriesCard from "./categories/all-categories-card";
 import { columns } from "./expenses/columns";
 import { DataTable } from "./expenses/data-table";
 
@@ -27,7 +28,8 @@ export default async function DetailsTabs({
         <TabsTrigger value="expense">Expenses</TabsTrigger>
       </TabsList>
       <TabsContent value="category">
-        Make changes to your account here.
+        {/* @ts-expect-error Server Component */}
+        <AllCategoriesCard budgetId={budgetId} currency={currency} />
       </TabsContent>
       <TabsContent value="expense">
         <DataTable data={expenses} columns={columns} searchKey="expenseName" />

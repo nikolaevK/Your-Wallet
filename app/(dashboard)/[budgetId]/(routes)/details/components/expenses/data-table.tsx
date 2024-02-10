@@ -39,8 +39,8 @@ export function DataTable<TData, TValue>({
 
   const [data, setData] = useState(initialData);
 
-  // this is needed in order to update the state with new data
-  // when user edits expense
+  // this effect is needed in order to update the state with new data
+  // when user edit expense and props change (new request from db on server is made) then state needs to be updated
   useEffect(() => {
     setData(initialData);
   }, [initialData]);

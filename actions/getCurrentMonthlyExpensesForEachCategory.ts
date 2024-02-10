@@ -16,6 +16,13 @@ export async function getCurrentMonthlyExpensesForEachCategory(
         expenses: {
           select: {
             amount: true,
+            budgetId: true,
+            expenseName: true,
+            categoryId: true,
+            id: true,
+            comments: true,
+            createdAt: true,
+            updatedAt: true,
           },
           where: {
             // Less than zero getting expenses with negative nums

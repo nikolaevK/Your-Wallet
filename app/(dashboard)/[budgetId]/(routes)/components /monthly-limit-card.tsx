@@ -64,7 +64,7 @@ export default async function MonthlyLimitCard({
       </CardHeader>
       <CardContent className="flex flex-col gap-2 font-bold text-sm  md:text-2xl">
         <span>{formatCurrency.format(monthlyLimit)}</span>
-        <Progress value={ratio} className="bg-[#d0ecda]" />
+        <Progress value={ratio} className="bg-[#d0ecda] h-2" />
       </CardContent>
     </Card>
   );
