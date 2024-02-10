@@ -35,6 +35,9 @@ export async function getCurrentMonthlyExpensesForEachCategory(
               lte: endOfMonth(new Date()),
             },
           },
+          orderBy: {
+            createdAt: "desc",
+          },
         },
       },
     });

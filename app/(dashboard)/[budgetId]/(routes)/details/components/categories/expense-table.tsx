@@ -36,7 +36,7 @@ export function ExpenseTable({
           <TableHead className="text-right">Amount</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody className="p-4">
+      <TableBody className="p-4 ">
         {expenses.map((expense) => (
           <TableRow key={expense.id}>
             <TableCell className="font-medium">{expense.expenseName}</TableCell>

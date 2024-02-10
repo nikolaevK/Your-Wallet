@@ -39,6 +39,7 @@ export default function DetailsCategoryCard({
         open={openDrawer}
         setOpen={setOpenDrawer}
         expenses={category.expenses}
+        category={category}
         currency={currency}
         currentExpensesSumForACategory={currentExpensesSumForACategory}
       />
