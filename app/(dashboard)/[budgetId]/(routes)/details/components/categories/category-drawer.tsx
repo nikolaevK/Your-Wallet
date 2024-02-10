@@ -60,7 +60,7 @@ export function CategoryDrawer({
   if (windowDimensions && windowDimensions?.width > 500) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[425px] ">
+        <DialogContent className="sm:max-w-[525px] h-full overflow-y-scroll">
           <DialogHeader className="mt-4">
             <div className="flex justify-between items-center">
               <DialogTitle>Monthly expenses</DialogTitle>
@@ -77,20 +77,21 @@ export function CategoryDrawer({
               done.
             </DialogDescription>
           </DialogHeader>
-
-          <ExpenseTable
-            currency={currency}
-            expenses={expenses}
-            currentExpensesSumForACategory={currentExpensesSumForACategory}
-          />
-          <UpdateCategoryForm
-            setOpen={setOpen}
-            setDisableEdit={setDisableEdit}
-            categoryName={category.categoryName}
-            id={category.id}
-            categoryLimit={category.categoryLimit.toString()}
-            disableEdit={disableEdit}
-          />
+          <div className="flex flex-col gap-8 p-4 w-full mb-6 h-full overflow-y-scroll">
+            <ExpenseTable
+              currency={currency}
+              expenses={expenses}
+              currentExpensesSumForACategory={currentExpensesSumForACategory}
+            />
+            <UpdateCategoryForm
+              setOpen={setOpen}
+              setDisableEdit={setDisableEdit}
+              categoryName={category.categoryName}
+              id={category.id}
+              categoryLimit={category.categoryLimit.toString()}
+              disableEdit={disableEdit}
+            />
+          </div>
         </DialogContent>
       </Dialog>
     );
