@@ -1,5 +1,4 @@
 import { getCurrency } from "@/actions/getCurrency";
-import prismadb from "@/lib/prismadb";
 import React from "react";
 import Categories from "./components /categories";
 import MonthlyLimitCard from "./components /monthly-limit-card";

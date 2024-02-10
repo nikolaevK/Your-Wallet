@@ -10,17 +10,20 @@ import { cn } from "@/lib/utils";
 import { BarChart3, LayoutDashboard, PlusSquare } from "lucide-react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import BudgetOptionsModal from "@/components/ui/my_components/budget-options-modal";
+import { useEffect } from "react";
+import { useBudgetModal } from "@/hooks/use-budget-modal";
 
 export default function NavBar({ budgets }: { budgets: Budget[] }) {
   const pathname = usePathname();
   const { budgetId } = useParams();
+  const { onClose } = useBudgetModal();
 
   // Use this if network is slow
   // Timeout is set to 1 second in (root)
   // Effect is responsible for closing an initial modal when first budget is created.
-  // useEffect(() => {
-  //   onClose();
-  // }, []);
+  useEffect(() => {
+    onClose();
+  }, []);
 
   return (
     <>
