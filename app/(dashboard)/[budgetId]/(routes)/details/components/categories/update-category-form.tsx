@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { createNewCategory } from "@/actions/createNewCategory";
 
 import {
   Form,
@@ -20,6 +19,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { updateCategory } from "@/actions/updateCategory";
+import { deleteCategory } from "@/actions/deleteCategory";
+import AlertModal from "@/components/ui/my_components/AlertModal";
 
 const formSchema = z.object({
   categoryName: z.string().min(3, {
@@ -48,6 +49,7 @@ export function UpdateCategoryForm({
   setOpen,
 }: UpdateCategoryFormInterface) {
   const [loading, setLoading] = useState(false);
+  const [alertModal, setAlertModal] = useState(false);
   const params = useParams();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -79,62 +81,100 @@ export function UpdateCategoryForm({
     }
   }
 
+  async function onDelete() {
+    try {
+      setLoading(true);
+      // This function runs on the server
+      const category = await deleteCategory(id, params.budgetId as string);
+      setLoading(false);
+      form.reset();
+      toast(`Category ${category.categoryName} has been deleted`);
+      setDisableEdit(true);
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      window.alert(error);
+    }
+  }
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
-        <FormField
-          control={form.control}
-          name="categoryName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Category Name</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="name..."
-                  {...field}
-                  disabled={loading || disableEdit}
-                />
-              </FormControl>
-              <FormDescription>
-                This is a name which will be displayed.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+    <>
+      <Form {...form}>
+        <AlertModal
+          isOpen={alertModal}
+          loading={loading}
+          onClose={() => setAlertModal(false)}
+          onConfirm={onDelete}
         />
-        <FormField
-          control={form.control}
-          name="categoryLimit"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Spending Limit</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="number"
-                  {...field}
-                  disabled={loading || disableEdit}
-                />
-              </FormControl>
-              <FormDescription>
-                This is a limit for this category.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button
-          className="w-full"
-          type="submit"
-          disabled={loading || disableEdit}
-        >
-          {loading ? (
-            <div className="animate-spin border-2 border-t-2 border-white-500 border-t-blue-600  h-5 w-5 border-spacing-1 rounded-full"></div>
-          ) : (
-            "Update"
-          )}
-        </Button>
-      </form>
-    </Form>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
+          <FormField
+            control={form.control}
+            name="categoryName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="name..."
+                    {...field}
+                    disabled={loading || disableEdit}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is a name which will be displayed.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="categoryLimit"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Spending Limit</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="number"
+                    {...field}
+                    disabled={loading || disableEdit}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is a limit for this category.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            className="w-full"
+            type="submit"
+            disabled={loading || disableEdit}
+          >
+            {loading ? (
+              <div className="animate-spin border-2 border-t-2 border-white-500 border-t-blue-600  h-5 w-5 border-spacing-1 rounded-full"></div>
+            ) : (
+              "Update"
+            )}
+          </Button>
+          <Button
+            onClick={() => setAlertModal(true)}
+            className="w-full"
+            type="button"
+            variant={"destructive"}
+            disabled={loading || disableEdit}
+          >
+            {loading ? (
+              <div className="animate-spin border-2 border-t-2 border-white-500 border-t-blue-600  h-5 w-5 border-spacing-1 rounded-full"></div>
+            ) : (
+              "Delete"
+            )}
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 }
