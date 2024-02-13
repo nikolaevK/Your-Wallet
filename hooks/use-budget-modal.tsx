@@ -5,12 +5,16 @@ import { create } from "zustand";
 
 interface useBudgetModalInterface {
   isOpen: boolean;
+  loading: boolean;
   onClose: () => void;
   onOpen: () => void;
+  initialBudgetLoad: () => void;
 }
 
 export const useBudgetModal = create<useBudgetModalInterface>((set) => ({
   isOpen: false,
+  loading: false,
+  initialBudgetLoad: () => set({ loading: true }),
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
 }));

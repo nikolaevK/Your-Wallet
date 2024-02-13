@@ -1,6 +1,5 @@
 import "./globals.css";
 import { auth, ClerkProvider } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 import { Inter as FontSans } from "next/font/google";
 
 import type { Metadata } from "next";

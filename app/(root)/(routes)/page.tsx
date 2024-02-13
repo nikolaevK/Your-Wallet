@@ -5,7 +5,7 @@ import { useBudgetModal } from "@/hooks/use-budget-modal";
 import { useEffect } from "react";
 
 export default function RootPage() {
-  const { onOpen, isOpen } = useBudgetModal();
+  const { onOpen, isOpen, loading } = useBudgetModal();
 
   // Does not allow to close the modal if budget does not exist
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function RootPage() {
     // timer is needed in order to prevent blinking when router pushes to a new route
     // when there is other route, Modal must close
     let timer = setTimeout(() => {
-      if (!isOpen) onOpen();
+      if (!isOpen && !loading) onOpen();
     }, 1000);
 
     return () => {

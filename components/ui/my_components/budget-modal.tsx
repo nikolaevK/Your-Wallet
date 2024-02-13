@@ -107,7 +107,7 @@ type FormSchema = z.infer<typeof formSchema>;
 
 export default function BudgetModal({ userId }: { userId: string }) {
   const [loading, setLoading] = useState(false);
-  const { isOpen, onClose } = useBudgetModal();
+  const { isOpen, onClose, initialBudgetLoad } = useBudgetModal();
   const router = useRouter();
 
   // extracting the type from formSchema
@@ -125,6 +125,9 @@ export default function BudgetModal({ userId }: { userId: string }) {
       // This function runs on the server
       const budget = await createNewBudget(budgetName, userId, currency);
       if (budget) router.push(`/${budget.id}`);
+      // Is needed for initial budget creation in order to close budgetModal
+      // once budget is created
+      initialBudgetLoad();
       setLoading(false);
       form.reset();
       onClose();

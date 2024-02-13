@@ -60,7 +60,7 @@ export function CategoryDrawer({
   if (windowDimensions && windowDimensions?.width > 500) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[525px] h-full overflow-y-scroll">
+        <DialogContent className="sm:max-w-[525px] max-h-[70%] overflow-y-scroll">
           <DialogHeader className="mt-4">
             <div className="flex justify-between items-center">
               <DialogTitle>Monthly expenses</DialogTitle>

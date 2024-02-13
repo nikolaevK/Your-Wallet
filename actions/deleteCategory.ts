@@ -11,12 +11,6 @@ export async function deleteCategory(categoryId: string, budgetId: string) {
 
   if (!categoryId) throw new Error("categoryId not specified");
 
-  await prismadb.expense.deleteMany({
-    where: {
-      categoryId,
-    },
-  });
-
   const category = await prismadb.category.delete({
     where: {
       id: categoryId,

@@ -66,7 +66,7 @@ export function CreateExpenseForm({ categories }: CreateExpenseFormInterface) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       amount: "",
-      categoryId: "",
+      categoryId: undefined,
       comments: undefined,
       createdAt: undefined,
       expenseName: "",
