@@ -81,7 +81,13 @@ export function CreateExpenseForm({ categories }: CreateExpenseFormInterface) {
         budgetId: params.budgetId as string,
       });
       setLoading(false);
-      form.reset();
+      form.reset({
+        amount: "",
+        comments: undefined,
+        createdAt: undefined,
+        expenseName: "",
+        categoryId: values.categoryId,
+      });
       toast(`Expense ${expense?.expenseName} has been created`);
     } catch (error) {
       console.log(error);

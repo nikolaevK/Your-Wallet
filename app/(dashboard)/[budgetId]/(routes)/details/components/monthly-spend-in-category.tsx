@@ -44,7 +44,7 @@ export default async function MonthlySpendInCategory({
       <CardHeader className="pb-0">
         <CardTitle className="text-sm">Total Expenses Per Month</CardTitle>
       </CardHeader>
-      <CardContent className="flex justify-center items-center h-[250px]  p-0">
+      <CardContent className="flex justify-center items-center h-[300px]  p-0">
         <ActiveShapePieChart
           data={chartData}
           totalWeeklyExpense={totalWeeklyExpense}
