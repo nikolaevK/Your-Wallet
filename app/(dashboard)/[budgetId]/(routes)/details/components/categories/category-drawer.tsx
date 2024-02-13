@@ -77,7 +77,7 @@ export function CategoryDrawer({
               done.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex flex-col gap-8 p-4 w-full mb-6 h-full overflow-y-scroll">
+          <div className="flex flex-col gap-8 p-4 w-full mb-6 h-full">
             <ExpenseTable
               currency={currency}
               expenses={expenses}
