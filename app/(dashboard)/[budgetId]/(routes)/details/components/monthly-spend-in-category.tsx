@@ -1,7 +1,7 @@
 import { getCurrentMonthlyExpensesForEachCategory } from "@/actions/getCurrentMonthlyExpensesForEachCategory";
 import { getMonthTotalExpense } from "@/actions/getMonthTotalExpense";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Currency, Category } from "@prisma/client";
+import { Currency } from "@prisma/client";
 import ActiveShapePieChart from "./active-shape-pie-chart";
 
 interface MonthlySpendInCategoryInterface {

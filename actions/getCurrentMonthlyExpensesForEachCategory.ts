@@ -41,5 +41,6 @@ export async function getCurrentMonthlyExpensesForEachCategory(
         },
       },
     });
+
   return categoriesWithExpensesForCurrentMonth;
 }
