@@ -1,7 +1,7 @@
 "use server";
 
 import prismadb from "@/lib/prismadb";
-import { endOfMonth, startOfMonth } from "date-fns";
+import { endOfMonth, startOfMonth, subHours } from "date-fns";
 import { DateRange } from "react-day-picker";
 
 export async function getExpensesForCurrentMonth(
@@ -18,7 +18,7 @@ export async function getExpensesForCurrentMonth(
           lt: 0,
         },
         createdAt: {
-          gte: startOfMonth(new Date()),
+          gte: subHours(startOfMonth(new Date()), 12),
           lte: endOfMonth(new Date()),
         },
       },
@@ -46,7 +46,7 @@ export async function getExpensesForCurrentMonth(
         lt: 0,
       },
       createdAt: {
-        gte: range.from,
+        gte: subHours(range.from!, 12),
         lte: range.to,
       },
     },

@@ -20,7 +20,7 @@ export default async function getMonthlyExpenses(budgetId: string) {
 
   for (let expense of expenses) {
     // January = 0 => December = 11
-    const month = expense.createdAt.getMonth();
+    const month = expense.createdAt.getUTCMonth();
 
     let expenseAmount = Math.abs(Number(expense.amount));
     // adding expenses for a particular month

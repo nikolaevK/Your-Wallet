@@ -1,6 +1,6 @@
 "use server";
 import prismadb from "@/lib/prismadb";
-import { endOfMonth, startOfMonth } from "date-fns";
+import { endOfMonth, startOfMonth, subDays, subHours } from "date-fns";
 
 export async function getCurrentMonthlyExpensesForEachCategory(
   budgetId: string
@@ -31,7 +31,7 @@ export async function getCurrentMonthlyExpensesForEachCategory(
             },
             // gets expenses which are made for current month
             createdAt: {
-              gte: startOfMonth(new Date()),
+              gte: subHours(startOfMonth(new Date()), 12),
               lte: endOfMonth(new Date()),
             },
           },

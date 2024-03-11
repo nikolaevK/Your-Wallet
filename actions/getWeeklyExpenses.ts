@@ -1,7 +1,7 @@
 "use server";
 
 import prismadb from "@/lib/prismadb";
-import { endOfWeek, startOfWeek } from "date-fns";
+import { endOfWeek, startOfWeek, subHours } from "date-fns";
 
 export async function getWeeklyExpenses(budgetId: string) {
   if (!budgetId) throw new Error("budgetId is required");
@@ -14,7 +14,7 @@ export async function getWeeklyExpenses(budgetId: string) {
       },
 
       createdAt: {
-        gte: startOfWeek(new Date()),
+        gte: subHours(startOfWeek(new Date()), 12),
         lte: endOfWeek(new Date()),
       },
     },

@@ -1,6 +1,6 @@
 "use server";
 import prismadb from "@/lib/prismadb";
-import { endOfMonth, startOfMonth } from "date-fns";
+import { endOfMonth, startOfMonth, subHours } from "date-fns";
 
 export async function getMonthTotalExpense(budgetId: string) {
   if (!budgetId) throw new Error("budgetId is required");
@@ -17,10 +17,11 @@ export async function getMonthTotalExpense(budgetId: string) {
         lt: 0,
       },
       createdAt: {
-        gte: startOfMonth(new Date()),
+        gte: subHours(startOfMonth(new Date()), 12),
         lte: endOfMonth(new Date()),
       },
     },
   });
+
   return amount;
 }

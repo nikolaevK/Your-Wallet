@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Separator } from "@/components/ui/separator";
-import prismadb from "@/lib/prismadb";
 import { Currency, Prisma } from "@prisma/client";
 import CategoryPieChart from "./category-pie-chart";
 
