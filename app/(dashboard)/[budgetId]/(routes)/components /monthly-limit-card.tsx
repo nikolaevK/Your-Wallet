@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import prismadb from "@/lib/prismadb";
 import { Currency } from "@prisma/client";
-import { endOfMonth, startOfMonth } from "date-fns";
+import { endOfMonth, startOfMonth, subHours } from "date-fns";
 
 interface MonthlyLimitCardInterface {
   budgetId: string;
@@ -36,7 +36,7 @@ export default async function MonthlyLimitCard({
         lt: 0,
       },
       createdAt: {
-        gte: startOfMonth(new Date()),
+        gte: subHours(startOfMonth(new Date()), 12),
         lte: endOfMonth(new Date()),
       },
     },
