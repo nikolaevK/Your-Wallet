@@ -6,6 +6,7 @@ import OverviewCard from "./components /overview-card";
 import RecentExpensesCard from "./components /recent-expenses-card";
 import SavingsCard from "./components /savings-card";
 import WeeklyExpensesChart from "./components /weekly-expenses-chart";
+import DashboardLoadingSkeleton from "./loading";
 
 interface DashboardInterface {
   params: { budgetId: string };
